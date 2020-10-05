@@ -1,0 +1,10 @@
+modLoader="javafml"
+loaderVersion="[34,)"
+license="MIT"
+[[mods]]
+modId="client_commands_test"
+version="${file.jarVersion}"
+displayName="ClientCommands"
+description='''
+A Test Mod experimenting with Client Side Commands
+'''
