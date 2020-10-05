@@ -1,3 +1,13 @@
+Client Commands 1.16.x:
+---
+
+Test Mod
+
+See 
+ - [ClientCommandsImpl](/src/main/java/clientcommands/client/commands/impl/ClientCommandsImpl.java) For Implementation
+ - [ClientProxy](/src/main/java/clientcommands/client/ClientProxy.java) For Usage
+
+
 TODO:
 ---
  * Client Help Command
@@ -12,8 +22,8 @@ TODO:
         - PRO: All simple Arguments should just work.
         - Prefer un-extend but adds a-lot of stuff to support. 
     * Single CommandDispatcher? harder to pass on-to Server.
-
-TODO: See net.minecraft.command.arguments.ArgumentTypes
+    
+See net.minecraft.command.arguments.ArgumentTypes
 
 | Argument | Command | Suggestions |
 |----------|---------|-------------|
