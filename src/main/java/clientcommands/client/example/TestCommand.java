@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.ArgumentTypes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.StringTextComponent;
 
@@ -41,6 +42,7 @@ import clientcommands.client.commands.arguments.selector.ClientEntitySummonArgum
 import clientcommands.client.commands.arguments.selector.ClientGameProfileArgument;
 import clientcommands.client.commands.arguments.selector.ClientPotionArgument;
 import clientcommands.client.commands.arguments.selector.ClientResourceLocationArgument;
+import clientcommands.client.commands.arguments.selector.ClientSlotArgument;
 import clientcommands.client.commands.arguments.selector.ClientSwizzleArgument;
 import clientcommands.client.commands.arguments.selector.ClientTeamArgument;
 import clientcommands.client.commands.arguments.text.ClientColorArgument;
@@ -102,8 +104,10 @@ public class TestCommand {
         register(root, "minecraft:vec3", ClientVec3Argument::vec3, ClientVec3Argument::getVec3, true);
         register(root, "minecraft:vec3_center", () -> ClientVec3Argument.vec3(true), ClientVec3Argument::getVec3);
         register(root, "minecraft:vec2", ClientVec2Argument::vec2, ClientVec2Argument::getVec2f, true);
+
         // -------------------------------------------------------------------------------------------------------------
         // The Following are mostly untested.
+
         register(root, "minecraft:block_state", ClientBlockStateArgument::blockState, ClientBlockStateArgument::getBlockState, true);
         register(root, "minecraft:block_predicate", ClientBlockPredicateArgument::blockPredicate, ClientBlockPredicateArgument::getBlockPredicate, true);
         register(root, "minecraft:item_stack", UNIMPLEMENTED, UNIMPLEMENTED_GETTER, true); // ClientItemArgument.class, new ArgumentSerializer<>(ItemArgument::item));
@@ -124,7 +128,7 @@ public class TestCommand {
         register(root, "minecraft:score_holder", UNIMPLEMENTED, UNIMPLEMENTED_GETTER, true); // ScoreHolderArgument.class, new ScoreHolderArgument.Serializer());
         register(root, "minecraft:swizzle", ClientSwizzleArgument::swizzle, ClientSwizzleArgument::getSwizzle, true);
         register(root, "minecraft:team", ClientTeamArgument::team, ClientTeamArgument::getTeam, true);
-        register(root, "minecraft:item_slot", UNIMPLEMENTED, UNIMPLEMENTED_GETTER, true); // SlotArgument.class, new ArgumentSerializer<>(SlotArgument::slot));
+        register(root, "minecraft:item_slot", ClientSlotArgument::slot, ClientSlotArgument::getSlot, true);
         register(root, "minecraft:resource_location", ClientResourceLocationArgument::resourceLocation, ClientResourceLocationArgument::getResourceLocation, true);
         register(root, "minecraft:recipe", ClientResourceLocationArgument::resourceLocation, ClientResourceLocationArgument.SUGGEST_RECIPES, ClientResourceLocationArgument::getRecipe);
         register(root, "minecraft:advancement", ClientResourceLocationArgument::resourceLocation, ClientResourceLocationArgument.SUGGEST_ADVANCEMENTS, ClientResourceLocationArgument::getAdvancement);
@@ -142,9 +146,9 @@ public class TestCommand {
         register(root, "minecraft:uuid", ClientUUIDArgument::uuid, ClientUUIDArgument::getUUID, true);
 
         if (type == RegisterClientCommandsEvent.Type.EXECUTABLE) {
-            Minecraft.getInstance().player.sendMessage(
-                new StringTextComponent("Arguments " + (COUNT - COUNT_UNIMPLEMENTED) + " / " + COUNT + " (expected: 38 + 6) + extra " + COUNT_EXTRA),
-                                                       Util.field_240973_b_);
+            PlayerEntity player = Minecraft.getInstance().player;
+            assert player != null;
+            player.sendMessage(new StringTextComponent("Arguments " + (COUNT - COUNT_UNIMPLEMENTED) + " / " + COUNT + " (expected: 38 + 6) + extra " + COUNT_EXTRA), Util.field_240973_b_/* DUMMY_UUID */);
         }
 
         //@formatter:on
