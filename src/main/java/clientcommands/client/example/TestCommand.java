@@ -2,7 +2,6 @@ package clientcommands.client.example;
 
 import java.util.Objects;
 import java.util.function.Supplier;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
@@ -47,6 +46,7 @@ import clientcommands.client.commands.arguments.selector.ClientSwizzleArgument;
 import clientcommands.client.commands.arguments.selector.ClientTeamArgument;
 import clientcommands.client.commands.arguments.text.ClientColorArgument;
 import clientcommands.client.commands.arguments.text.ClientComponentArgument;
+import clientcommands.client.commands.autocomplete.LiteralAutocompleteArgumentBuilder;
 import clientcommands.client.event.RegisterClientCommandsEvent;
 
 import static clientcommands.client.commands.ClientCommands.argument;
@@ -104,10 +104,6 @@ public class TestCommand {
         register(root, "minecraft:vec3", ClientVec3Argument::vec3, ClientVec3Argument::getVec3, true);
         register(root, "minecraft:vec3_center", () -> ClientVec3Argument.vec3(true), ClientVec3Argument::getVec3);
         register(root, "minecraft:vec2", ClientVec2Argument::vec2, ClientVec2Argument::getVec2f, true);
-
-        // -------------------------------------------------------------------------------------------------------------
-        // The Following are mostly untested.
-
         register(root, "minecraft:block_state", ClientBlockStateArgument::blockState, ClientBlockStateArgument::getBlockState, true);
         register(root, "minecraft:block_predicate", ClientBlockPredicateArgument::blockPredicate, ClientBlockPredicateArgument::getBlockPredicate, true);
         register(root, "minecraft:item_stack", UNIMPLEMENTED, UNIMPLEMENTED_GETTER, true); // ClientItemArgument.class, new ArgumentSerializer<>(ItemArgument::item));
@@ -206,7 +202,11 @@ public class TestCommand {
             if (provider != null) arg.suggests(provider);
         }
 
-        root.then(literal(name).then(arg.executes(command(echo(name, getter)))));
+        root.then(literalAutocomplete(name).then(arg.executes(command(echo(name, getter)))));
+    }
+
+    private static LiteralAutocompleteArgumentBuilder<ISuggestionProvider> literalAutocomplete(String literal) {
+        return LiteralAutocompleteArgumentBuilder.literalAutocomplete(literal);
     }
 
     public static <T> Command<ClientCommandSource> echo(String name, ArgumentGetter<T> getter) {
