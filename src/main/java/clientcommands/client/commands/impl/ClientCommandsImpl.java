@@ -62,7 +62,7 @@ public class ClientCommandsImpl {
         Minecraft minecraft = Minecraft.getInstance();
 
         /* Login: ? - TODO: Test if we can get away without enqueue */
-        /* Packets: We need to delay until the packethandler has been called on the main thread */
+        /* Packets: We need to delay until the packet-handler has been called on the main thread */
         minecraft.enqueue(() -> {
             LOGGER.info(Markers.COMMAND, "Registering Client Commands from {}", source);
 
@@ -92,7 +92,7 @@ public class ClientCommandsImpl {
         register("Login");
 
         /* Register a Packet Listener so we can handle CommandDispatcher getting reset when travelling dimensions */
-        /** TODO: Replace with a Hook in Forge PR */
+        /* TODO: Replace with a Hook in Forge PR */
         LOGGER.info(Markers.COMMAND, "Registering Channel Handler");
         manager.channel()
                .pipeline()
@@ -139,7 +139,7 @@ public class ClientCommandsImpl {
                 /* Execute our dispatcher */
                 dispatcher.execute(results);
             } catch (CommandSyntaxException e) {
-                /* If we get an unknown command / unknown argument try forwarding to the server */
+                /* If we get an unknown command / unknown argument work out if we should forward to the server */
                 if (e.getType() == CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherUnknownCommand() ||
                     e.getType() == CommandSyntaxException.BUILT_IN_EXCEPTIONS.dispatcherUnknownArgument()) {
 
@@ -164,6 +164,7 @@ public class ClientCommandsImpl {
                     } catch (Exception ignored) { /* NO-OP */ }
                 }
 
+                /* Not an unknown command / argument & unlikely to be a server command pass on to our error handling */
                 throw e;
             }
         } catch (CommandException e) {

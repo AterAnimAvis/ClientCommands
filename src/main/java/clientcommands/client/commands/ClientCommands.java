@@ -1,6 +1,7 @@
 package clientcommands.client.commands;
 
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
 
 import com.mojang.brigadier.Command;
@@ -11,6 +12,9 @@ import com.mojang.brigadier.context.CommandContext;
 import clientcommands.client.commands.impl.ClientCommandsImpl;
 import clientcommands.common.Markers;
 
+/**
+ * Client Counterpart to {@link Commands}
+ */
 public class ClientCommands {
 
     /**

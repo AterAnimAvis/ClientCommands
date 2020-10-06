@@ -5,9 +5,9 @@ import net.minecraftforge.fml.common.Mod;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import clientcommands.common.Markers;
 import clientcommands.client.ClientProxy;
 import clientcommands.common.CommonProxy;
+import clientcommands.common.Markers;
 import clientcommands.server.ServerProxy;
 
 @Mod(R.ID)
