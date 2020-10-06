@@ -173,7 +173,7 @@ public class TestCommand {
         SuggestionProvider<ISuggestionProvider> provider,
         ArgumentGetter<?> getter
     ) {
-        register(root, name, creator, getter, false);
+        register(root, name, creator, provider, getter, false);
     }
 
     public static <T> void register(
