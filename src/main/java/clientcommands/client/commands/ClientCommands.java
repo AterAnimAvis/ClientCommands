@@ -19,7 +19,7 @@ public class ClientCommands {
 
     /**
      * Creates a new argument. Intended to be imported statically. The benefit of this over the brigadier {@link
-     * LiteralArgumentBuilder#literal(String)} method is that it is typed to {@link CommandSource}.
+     * LiteralArgumentBuilder#literal(String)} method is that it is typed to {@link ISuggestionProvider}.
      */
     public static LiteralArgumentBuilder<ISuggestionProvider> literal(String name) {
         return LiteralArgumentBuilder.literal(name);
@@ -27,7 +27,7 @@ public class ClientCommands {
 
     /**
      * Creates a new argument. Intended to be imported statically. The benefit of this over the brigadier {@link
-     * RequiredArgumentBuilder#argument} method is that it is typed to {@link CommandSource}.
+     * RequiredArgumentBuilder#argument} method is that it is typed to {@link ISuggestionProvider}.
      */
     public static <T> RequiredArgumentBuilder<ISuggestionProvider, T> argument(String name, ArgumentType<T> type) {
         return RequiredArgumentBuilder.argument(name, type);
